@@ -509,6 +509,7 @@ NetIo.Server = NetIo.EventingClass.extend({
 
 		this._websocket = require('websocket');
 		this._http = require('http');
+		this._compressor = require('compressor');
 
 		this._sockets = [];
 		this._socketsById = {};
@@ -684,7 +685,7 @@ NetIo.Server = NetIo.EventingClass.extend({
 	 * @private
 	 */
 	_encode: function (data) {
-		return JSON.stringify(data);
+		return this._compressor.lzw_encode(JSON.stringify(data));
 	},
 
 	/**
@@ -694,7 +695,7 @@ NetIo.Server = NetIo.EventingClass.extend({
 	 * @private
 	 */
 	_decode: function (data) {
-		return JSON.parse(data);
+		return JSON.parse(this._compressor.lzw_decode(data));
 	}
 });
 
