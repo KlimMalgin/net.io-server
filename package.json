@@ -13,6 +13,7 @@
 	},
 	"main": "index",
 	"dependencies": {
-		"websocket": "1.0.3"
+		"websocket": "1.0.3",
+		"compressor": "https://github.com/KlimMalgin/compressor.git"
 	}
 }
