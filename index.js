@@ -18,7 +18,7 @@ NetIo._debug = {
 	}
 };
 
-NetIo._compressor = require('compressor');
+NetIo._compressor = require('lz-string');
 
 /**
  * Define the class system.
@@ -689,7 +689,7 @@ NetIo.Server = NetIo.EventingClass.extend({
 		//
 		// TODO: Устанавливать необходимость сжатия через переменную окружения
 		//
-		return NetIo._compressor.lzw_encode(JSON.stringify(data));
+		return NetIo._compressor.compress(JSON.stringify(data));
 	},
 
 	/**
@@ -702,7 +702,7 @@ NetIo.Server = NetIo.EventingClass.extend({
 		//
 		// TODO: Устанавливать необходимость сжатия через переменную окружения
 		//
-		return JSON.parse(NetIo._compressor.lzw_decode(data));
+		return JSON.parse(NetIo._compressor.decompress(data));
 	}
 });
 
