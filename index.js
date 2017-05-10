@@ -18,6 +18,8 @@ NetIo._debug = {
 	}
 };
 
+NetIo._compressor = require('compressor');
+
 /**
  * Define the class system.
  * @type {*}
@@ -509,7 +511,6 @@ NetIo.Server = NetIo.EventingClass.extend({
 
 		this._websocket = require('websocket');
 		this._http = require('http');
-		this._compressor = require('compressor');
 
 		this._sockets = [];
 		this._socketsById = {};
@@ -685,7 +686,10 @@ NetIo.Server = NetIo.EventingClass.extend({
 	 * @private
 	 */
 	_encode: function (data) {
-		return this._compressor.lzw_encode(JSON.stringify(data));
+		//
+		// TODO: Устанавливать необходимость сжатия через переменную окружения
+		//
+		return NetIo._compressor.lzw_encode(JSON.stringify(data));
 	},
 
 	/**
@@ -695,7 +699,10 @@ NetIo.Server = NetIo.EventingClass.extend({
 	 * @private
 	 */
 	_decode: function (data) {
-		return JSON.parse(this._compressor.lzw_decode(data));
+		//
+		// TODO: Устанавливать необходимость сжатия через переменную окружения
+		//
+		return JSON.parse(NetIo._compressor.lzw_decode(data));
 	}
 });
 
